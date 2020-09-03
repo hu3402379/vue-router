@@ -1,3 +1,17 @@
+## [3.4.4](https://github.com/vuejs/vue-router/compare/v3.4.3...v3.4.4) (2020-09-03)
+
+
+### Bug Fixes
+
+* **types:** add missing NavigationFailure types ([fda7067](https://github.com/vuejs/vue-router/commit/fda70673397a18f45c9423ee9f4a775ca6096c44)), closes [#3293](https://github.com/vuejs/vue-router/issues/3293)
+
+
+### Features
+
+* **history:** Reset history.current when all apps are destroyed ([#3298](https://github.com/vuejs/vue-router/issues/3298)) ([c69ff7b](https://github.com/vuejs/vue-router/commit/c69ff7bd60228fb79acd764c3fdae91015a49103))
+
+
+
 ## [3.4.3](https://github.com/vuejs/vue-router/compare/v3.4.2...v3.4.3) (2020-08-11)
 
 - Revert 4fbaa9f7880276e661227442ef5923131a589210: "fix: keep repeated params in query/hash relative locations" Closes #3289
