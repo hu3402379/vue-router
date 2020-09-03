@@ -1,5 +1,5 @@
 /*!
-  * vue-router v3.4.3
+  * vue-router v3.4.3.1
   * (c) 2020 Evan You
   * @license MIT
   */
@@ -7,7 +7,7 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = global || self, global.VueRouter = factory());
-}(this, function () { 'use strict';
+}(this, (function () { 'use strict';
 
   /*  */
 
@@ -1912,6 +1912,7 @@
     step(0);
   }
 
+  // When changing thing, also edit router.d.ts
   var NavigationFailureType = {
     redirected: 2,
     aborted: 4,
@@ -2318,11 +2319,18 @@
     // Default implementation is empty
   };
 
-  History.prototype.teardownListeners = function teardownListeners () {
+  History.prototype.teardown = function teardown () {
+    // clean up event listeners
+    // https://github.com/vuejs/vue-router/issues/2341
     this.listeners.forEach(function (cleanupListener) {
       cleanupListener();
     });
     this.listeners = [];
+
+    // reset current history route
+    // https://github.com/vuejs/vue-router/issues/3294
+    this.current = START;
+    this.pending = null;
   };
 
   function normalizeBase (base) {
@@ -2882,11 +2890,7 @@
       // we do not release the router so it can be reused
       if (this$1.app === app) { this$1.app = this$1.apps[0] || null; }
 
-      if (!this$1.app) {
-        // clean up event listeners
-        // https://github.com/vuejs/vue-router/issues/2341
-        this$1.history.teardownListeners();
-      }
+      if (!this$1.app) { this$1.history.teardown(); }
     });
 
     // main app previously initialized
@@ -3048,7 +3052,7 @@
   }
 
   VueRouter.install = install;
-  VueRouter.version = '3.4.3';
+  VueRouter.version = '3.4.3.1';
   VueRouter.isNavigationFailure = isNavigationFailure;
   VueRouter.NavigationFailureType = NavigationFailureType;
 
@@ -3058,4 +3062,4 @@
 
   return VueRouter;
 
-}));
+})));

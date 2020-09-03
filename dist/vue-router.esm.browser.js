@@ -1,5 +1,5 @@
 /*!
-  * vue-router v3.4.3
+  * vue-router v3.4.3.1
   * (c) 2020 Evan You
   * @license MIT
   */
@@ -1885,6 +1885,7 @@ function runQueue (queue, fn, cb) {
   step(0);
 }
 
+// When changing thing, also edit router.d.ts
 const NavigationFailureType = {
   redirected: 2,
   aborted: 4,
@@ -2306,11 +2307,18 @@ class History {
     // Default implementation is empty
   }
 
-  teardownListeners () {
+  teardown () {
+    // clean up event listeners
+    // https://github.com/vuejs/vue-router/issues/2341
     this.listeners.forEach(cleanupListener => {
       cleanupListener();
     });
     this.listeners = [];
+
+    // reset current history route
+    // https://github.com/vuejs/vue-router/issues/3294
+    this.current = START;
+    this.pending = null;
   }
 }
 
@@ -2849,11 +2857,7 @@ class VueRouter {
       // we do not release the router so it can be reused
       if (this.app === app) this.app = this.apps[0] || null;
 
-      if (!this.app) {
-        // clean up event listeners
-        // https://github.com/vuejs/vue-router/issues/2341
-        this.history.teardownListeners();
-      }
+      if (!this.app) this.history.teardown();
     });
 
     // main app previously initialized
@@ -3010,7 +3014,7 @@ function createHref (base, fullPath, mode) {
 }
 
 VueRouter.install = install;
-VueRouter.version = '3.4.3';
+VueRouter.version = '3.4.3.1';
 VueRouter.isNavigationFailure = isNavigationFailure;
 VueRouter.NavigationFailureType = NavigationFailureType;
 
