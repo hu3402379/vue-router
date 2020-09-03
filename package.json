@@ -1,6 +1,6 @@
 {
-  "name": "@dw/vue-router",
-  "version": "3.4.4",
+  "name": "@deepwise/vue-router",
+  "version": "1.0.1",
   "description": "Official router for Vue.js 2",
   "author": "Evan You",
   "license": "MIT",
