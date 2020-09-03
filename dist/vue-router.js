@@ -1,5 +1,5 @@
 /*!
-  * vue-router v1.0.1
+  * vue-router v4.1.1
   * (c) 2020 Evan You
   * @license MIT
   */
@@ -2551,7 +2551,7 @@
 
     HTML5History.prototype.ensureURL = function ensureURL (push) {
       if (getLocation(this.base) !== this.current.fullPath) {
-        var current = cleanPath(this.base + this.current.fullPath);
+        var current = this.base || cleanPath(this.base + this.current.fullPath);
         push ? pushState(current) : replaceState(current);
       }
     };
@@ -3052,7 +3052,7 @@
   }
 
   VueRouter.install = install;
-  VueRouter.version = '1.0.1';
+  VueRouter.version = '4.1.1';
   VueRouter.isNavigationFailure = isNavigationFailure;
   VueRouter.NavigationFailureType = NavigationFailureType;
 
