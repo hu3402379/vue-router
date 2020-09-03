@@ -1,5 +1,5 @@
 /*!
-  * vue-router v3.4.4
+  * vue-router v1.0.1
   * (c) 2020 Evan You
   * @license MIT
   */
@@ -2545,7 +2545,7 @@ var HTML5History = /*@__PURE__*/(function (History) {
 
   HTML5History.prototype.ensureURL = function ensureURL (push) {
     if (getLocation(this.base) !== this.current.fullPath) {
-      var current = this.base || cleanPath(this.base + this.current.fullPath);
+      var current = getLocation(this.base) || cleanPath(this.base + this.current.fullPath);
       push ? pushState(current) : replaceState(current);
     }
   };
@@ -3046,7 +3046,7 @@ function createHref (base, fullPath, mode) {
 }
 
 VueRouter.install = install;
-VueRouter.version = '3.4.4';
+VueRouter.version = '1.0.1';
 VueRouter.isNavigationFailure = isNavigationFailure;
 VueRouter.NavigationFailureType = NavigationFailureType;
 
